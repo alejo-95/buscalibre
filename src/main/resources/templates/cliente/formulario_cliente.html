@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/principal :: head}"></head>
+<body>
+	<header th:replace="~{plantillas/principal :: header}"></header>
+	<div class="container  py-4">
+
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 class="text-secondary" th:text="${titulo}"></h3>
+			</div>
+			<div class="card-body shadow-lg p-3">
+				<h4 class="card-title">
+				</h4>
+				<form th:action="@{/libreria/clienteguardar}" th:object="${cliente}" method="post" enctype="multipart/form-data">
+
+					
+
+					<div class="mb-3">
+						<label class="form-label">Identificación</label> 
+						<input type="text" th:field="*{identificacion}" class="form-control form-control-sm" />
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('identificacion')}" th:errors="*{identificacion}"></small>
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">Nombres</label> 
+						<input type="text" th:field="*{nombres}" class="form-control form-control-sm" /> 
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('nombres')}" th:errors="*{nombres}"></small>
+					</div>
+
+					<div class="mb-3">
+						<label class="form-label">Apellidos</label> 
+						<input type="text" th:field="*{apellidos}" class="form-control form-control-sm" /> 
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}"></small>
+					</div>
+						
+
+					<div class="mb-3">
+						<label class="form-label">Teléfono</label> 
+						<input type="text" th:field="*{telefono}" class="form-control form-control-sm" /> 
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
+					</div>
+										
+					<div class="mb-3">
+						<label class="form-label">Correo electrónico</label> 
+						<input type="text" th:field="*{correo_electronico}" class="form-control form-control-sm" /> 
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('correo_electronico')}" th:errors="*{correo_electronico}"></small>
+					</div>					
+
+					<div class="mb-3">
+						<div>
+							<label class="form-label">Imagen (foto del cliente)</label>
+						</div>						
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="imagen" name="file" accept="image/jpeg,image/jpg">
+							<label for="imagen" class="custom-file-label">Seleccionar archivo</label>
+						</div>
+					</div>
+
+					<div>
+						<input type="submit" th:value="${accion} + ' cliente'" class="btn btn-outline-secondary btn-sm" />
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+</html>        

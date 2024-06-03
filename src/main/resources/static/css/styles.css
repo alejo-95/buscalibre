@@ -1,0 +1,19 @@
+.btn-group-xs>.btn,
+.btn-xs {
+  padding: .5rem .5rem;
+  font-size: .875rem;
+  line-height: .5;
+  border-radius: .2rem;
+}
+
+.custom-file-label::after { 
+  content:"Buscar..." 
+}
+
+.logo {
+  width: 240px;
+}
+
+.icono {
+  width: 50px;
+}

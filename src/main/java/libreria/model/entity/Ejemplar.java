@@ -1,0 +1,117 @@
+package libreria.model.entity;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "ejemplares")
+public class Ejemplar {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "numero_ejemplar", nullable = false)
+    private Long numeroEjemplar;
+
+    @Column(name = "fecha_ingreso")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	@NotNull
+    private Date fechaIngreso;
+
+    @Column(length = 50)
+    private String estado;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "libro_id")
+    private Libro libro;
+
+    @OneToMany(mappedBy = "ejemplar", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Prestamo> prestamos;
+
+    public Ejemplar(Long id, Long numeroEjemplar, @NotNull Date fechaIngreso, String estado, Libro libro,
+            List<Prestamo> prestamos) {
+        this.id = id;
+        this.numeroEjemplar = numeroEjemplar;
+        this.fechaIngreso = fechaIngreso;
+        this.estado = estado;
+        this.libro = libro;
+        this.prestamos = prestamos;
+    }
+
+    public Ejemplar() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getNumeroEjemplar() {
+        return numeroEjemplar;
+    }
+
+    public void setNumeroEjemplar(Long numeroEjemplar) {
+        this.numeroEjemplar = numeroEjemplar;
+    }
+
+    public Date getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Libro getLibro() {
+        return libro;
+    }
+
+    public void setLibro(Libro libro) {
+        this.libro = libro;
+    }
+
+    public List<Prestamo> getPrestamos() {
+        return prestamos;
+    }
+
+    public void setPrestamos(List<Prestamo> prestamos) {
+        this.prestamos = prestamos;
+    }
+
+    
+
+
+
+
+
+}
