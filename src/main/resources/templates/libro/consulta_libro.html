@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/principal :: head}"></head>
+<style>
+	.list-group-item {
+	    padding-top: 5px;
+	    padding-bottom: 5px;
+	}
+</style>
+<body>
+	<header th:replace="~{plantillas/principal :: header}"></header>
+
+	<div class="container  py-4">
+
+		<div class="card bg-light">
+
+			<div class="card-header">
+				<h3 class="text-secondary" th:text="${titulo}"></h3>
+			</div>
+			
+			<h4 class="card-title text-right">
+				<a th:href="@{/libreria/ejemplarnuevo/} + ${libro.id}" class="btn btn-outline-success btn-sm mt-3 mr-3">Crear Ejemplar</a>
+			</h4>
+
+			<div class="card-body">
+				<h4 class="card-title"></h4>
+				<img th:if="${#strings.length(libro.caratula) > 0}" th:src="@{/uploads/} + ${libro.caratula}"
+					style="max-width: 15%" class="img-thumbnail rounded float-left">
+				<ul class="list-group">
+					<li class="list-group-item"><b>Titulo: </b> <i th:text="${libro.titulo}"></i></li>
+					<li class="list-group-item"><b>Editorial: </b> <i th:text="${libro.editorial.nombreCompleto}"></i></li>
+					<li class="list-group-item"><b>Edición: </b> <i th:text="${libro.edicion}"></i></li>
+					<li class="list-group-item"><b>Año: </b> <i th:text="${libro.anio}"></i></li>
+					<li class="list-group-item"><b>ISBN: </b> <i th:text="${libro.isbn}"></i></li>
+				</ul>
+
+				<table th:if="${not #lists.isEmpty(libro.ejemplares)}" class="table table-striped table-bordered table-sm mt-4">
+					<thead class="thead-dark">
+					<tr>
+						<th>Estado</th>
+						<th>Fecha de Ingreso</th>
+						<th>Nro de Ejemplar</th>
+						<th>Acción</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each="lib : ${libro.ejemplares}">
+						<td th:text="${lib.estado}"></td>
+						<td th:text="${lib.fechaIngreso}"></td>
+						<td th:text="${lib.numeroEjemplar}"></td>
+						<td class="text-center">
+							<a th:href="@{/libreria/ejemplarmodificar/} + ${lib.id}" title="editar">
+							<i class="bi-pencil-fill" style="color: cornflowerblue"></i></a>&nbsp;
+							<a th:href="@{/libreria/eliminarejemplar/} + ${lib.id}" 
+							onclick="return confirm('Está seguro de eliminar el ejemplar?')">
+							<i class="bi-eraser-fill" style="color: indianred"></i></a>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+	
+				<div
+				th:text="'No hay ejemplares disponibles para el libro ' + ${libro.titulo}"
+				th:if="${#lists.isEmpty(libro.ejemplares)}" class="alert alert-info mt-3"></div>
+
+				<div class="text-right mt-3">
+					<a th:href="@{/libreria/libroslistar}" class="btn btn-sm btn-light">&laquo; regresar</a>
+				</div> 
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

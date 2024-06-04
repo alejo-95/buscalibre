@@ -3,7 +3,6 @@ package libreria.model.entity;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -32,9 +32,7 @@ public class Ejemplar {
     private Long numeroEjemplar;
 
     @Column(name = "fecha_ingreso")
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
-	@NotNull
     private Date fechaIngreso;
 
     @Column(length = 50)
@@ -58,6 +56,11 @@ public class Ejemplar {
     }
 
     public Ejemplar() {
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.fechaIngreso = new Date();
     }
 
     public Long getId() {

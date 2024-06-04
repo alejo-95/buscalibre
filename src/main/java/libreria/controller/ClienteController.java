@@ -94,7 +94,7 @@ public class ClienteController {
             if (cliente.getId() != null && cliente.getId() > 0 &&
                     cliente.getFoto() != null && cliente.getFoto().length() > 0) {
 
-                Path rutaAbsUploads = Paths.get("uploads").resolve(cliente.getFoto()).toAbsolutePath();
+                Path rutaAbsUploads = Paths.get("uploads", "clientes").resolve(cliente.getFoto()).toAbsolutePath();
                 File archivo = rutaAbsUploads.toFile();
                 if (archivo.exists() && archivo.canRead()) {
                     archivo.delete();
@@ -103,12 +103,12 @@ public class ClienteController {
 
             String nombreUnico = UUID.randomUUID().toString().substring(0, 8) + "_"
                     + multipartFile.getOriginalFilename();
-            Path rutaUploads = Paths.get("uploads").resolve(nombreUnico);
+            Path rutaUploads = Paths.get("uploads", "clientes").resolve(nombreUnico);
             Path rutaAbsUploads = rutaUploads.toAbsolutePath();
 
             try {
                 Files.copy(multipartFile.getInputStream(), rutaAbsUploads);
-                cliente.setFoto(nombreUnico);
+                cliente.setFoto("clientes/" + nombreUnico);
                 flash.addFlashAttribute("info", "El archivo " + multipartFile.getOriginalFilename() + " fue cargado");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -155,6 +155,28 @@ public class ClienteController {
 		model.addAttribute("cliente", cliente);
 		return "cliente/formulario_cliente";
 	}
+
+    @GetMapping("/clienteeliminar/{id}")
+	public String clienteEliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
+		if (id > 0) {
+			Cliente cliente = libreriaServiceIface.buscarClientePorId(id);
+			if(cliente != null) {
+				libreriaServiceIface.eliminarClientePorId(id);
+				flash.addFlashAttribute("success", "El registro fue eliminado de la base de datos");
+				Path rutaAbsUploads = Paths.get("uploads").resolve(cliente.getFoto()).toAbsolutePath();
+				File archivo = rutaAbsUploads.toFile();
+				if(archivo.exists() && archivo.canRead()) {
+					if(archivo.delete()) {
+						flash.addFlashAttribute("info", "El archivo " + cliente.getFoto() + " fue eliminado");	
+					}
+				}
+			}
+		}
+		else {
+			flash.addFlashAttribute("error", "Error, el ID no es válido !!");
+		}
+		return "redirect:/libreria/clienteslistar";
+	}	
     
 
 }

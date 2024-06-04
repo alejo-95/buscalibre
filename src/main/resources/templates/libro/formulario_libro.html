@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+
+<body>
+	<header th:replace="~{plantillas/principal :: header}"></header>
+
+	<div class="container py-4 ">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 class="text-secondary" th:text="${titulo}"></h3>
+			</div>
+			<div class="card-body">
+
+				<form th:action="@{/libreria/libroguardar}" th:object="${libro}" method="post" enctype="multipart/form-data">
+
+					<div class="mb-3">
+						<label>Titulo</label>
+						<input type="text" th:field="*{titulo}" class="form-control form-control-sm" />
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></small>
+					</div>
+
+					<div class="mb-3">
+						<label>Editorial</label>
+						<select th:field="*{editorial}" class="form-control">
+							<option value="">Seleccionar...</option>
+							<option th:each="edi : ${editoriales}" th:value="${edi.id}" th:text="${edi.nombreCompleto}"></option>
+						</select>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('editorial')}" th:errors="*{editorial}"></small>						
+					</div>
+
+					<div class="mb-3">
+						<label>Edición</label>
+						<input type="number" th:field="*{edicion}" class="form-control form-control-sm" />
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('edicion')}" th:errors="*{edicion}"></small>
+					</div>
+
+					<div class="mb-3">
+						<label>ISBN</label>
+						<input type="text" th:field="*{isbn}" class="form-control form-control-sm" />
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></small>
+					</div>
+
+					<div class="mb-3">
+						<label>Año</label>
+						<input type="text" th:field="*{anio}" class="form-control form-control-sm" placeholder="Año" />
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('anio')}" th:errors="*{anio}"></small>
+					</div>
+
+					<div class="mb-3">
+						<div>
+							<label class="form-label">Imagen (foto de la caratula)</label>
+						</div>						
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="imagen" name="file">
+							<label for="imagen" class="custom-file-label">Seleccionar archivo</label>
+						</div>
+					</div>
+
+					<div>
+						<input type="submit" th:value="${accion} + ' libro'" class="btn btn-outline-secondary btn-sm" />
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

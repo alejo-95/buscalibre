@@ -2,6 +2,7 @@ package libreria.model.entity;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -40,6 +42,9 @@ public class Libro {
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
 
+    @OneToMany(mappedBy = "libro", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Ejemplar> ejemplares;
+
     @ManyToMany(mappedBy = "libros", fetch = FetchType.LAZY)
     private List<Autor> autores;
 
@@ -47,7 +52,7 @@ public class Libro {
     }
 
     public Libro(Long id, String titulo, String edicion, String caratula, String anio, String isbn, Editorial editorial,
-            List<Autor> autores) {
+            List<Ejemplar> ejemplares, List<Autor> autores) {
         this.id = id;
         this.titulo = titulo;
         this.edicion = edicion;
@@ -55,6 +60,7 @@ public class Libro {
         this.anio = anio;
         this.isbn = isbn;
         this.editorial = editorial;
+        this.ejemplares = ejemplares;
         this.autores = autores;
     }
 
@@ -114,6 +120,14 @@ public class Libro {
         this.editorial = editorial;
     }
 
+    public List<Ejemplar> getEjemplares() {
+        return ejemplares;
+    }
+
+    public void setEjemplares(List<Ejemplar> ejemplares) {
+        this.ejemplares = ejemplares;
+    }
+
     public List<Autor> getAutores() {
         return autores;
     }
@@ -121,6 +135,8 @@ public class Libro {
     public void setAutores(List<Autor> autores) {
         this.autores = autores;
     }
+
+    
 
             
     

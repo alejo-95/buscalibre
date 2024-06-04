@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/principal :: head}"></head>
+<body>
+	<header th:replace="~{plantillas/principal :: header}"></header>
+	<div class="container  py-4">
+
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 class="text-secondary" th:text="${titulo}"></h3>
+			</div>
+			<div class="card-body shadow-lg p-3">
+				<h4 class="card-title">
+				</h4>
+				<form method="post" th:object="${ejemplar}" th:action="@{/libreria/ejemplarguardar}">
+
+					<div class="mb-3">
+						<label>Estado</label>
+						<select th:field="*{estado}" class="form-control">
+							<option value="">Seleccionar...</option>
+							<option value="Nuevo">Nuevo</option>
+							<option value="Usado">Usado</option>
+						</select>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></small>						
+					</div>
+					
+					<div class="mb-3">
+						<label class="form-label">Nro ejemplar</label> 
+						<input type="text" th:field="*{numeroEjemplar}" class="form-control form-control-sm" />
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('numeroEjemplar')}" th:errors="*{numeroEjemplar}"></small>
+					</div>				
+					
+
+					<div>
+						<input type="submit" th:value="${accion}" class="btn btn-outline-secondary btn-sm" />
+					</div>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+</html>        

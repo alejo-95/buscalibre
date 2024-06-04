@@ -44,6 +44,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Otro</a>
             </li>
+
             <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
@@ -59,11 +60,33 @@
                   >Clientes</a
                 >
                 <a class="dropdown-item" th:href="@{/comercial/productoslistar}"
-                  >Productos</a
+                  >Prestamos</a
                 >
                 <a class="dropdown-item" href="#">Otro item menú</a>
               </div>
             </li>
+
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Catálogo
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" th:href="@{/libreria/libroslistar}"
+                  >Libros</a
+                >
+                <a class="dropdown-item" th:href="@{/comercial/productoslistar}"
+                  >Editoriales</a
+                >
+                <a class="dropdown-item" href="#">Otro item menú</a>
+              </div>
+            </li>
+
           </ul>
         </div>
         <div class="navbar navbar-right" sec:authorize="not isAuthenticated()">
