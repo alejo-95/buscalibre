@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{plantillas/principal :: head}"></head>
+<body>
+	<header th:replace="~{plantillas/principal :: header}"></header>
+	<div class="container py-4 ">
+		<div class="card bg-light">
+			<div class="card-header">
+				<h3 class="text-secondary" th:text="${titulo}"></h3>
+			</div>
+			<div class="card-body">
+				<h4 class="card-title text-right">
+        <a th:href="@{/libreria/clienteconsultar/} + ${prestamo.cliente.id}" class="btn btn-sm btn-light" >&laquo; regresar</a>
+        </h4>
+
+				<form method="post" th:object="${prestamo}" th:action="@{/libreria/guardarprestamo}">
+					
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" th:text="'Cliente'"></label>
+						<div class="col-sm-6">
+							<input type="text" th:value="${prestamo.cliente.nombres}"
+								class="form-control" disabled="disabled"/>
+						</div>
+					</div>
+					
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label">Estado</label>
+						<div class="col-sm-6">
+						<select th:field="*{estado}" class="form-control">
+							<option value="">Seleccionar...</option>
+							<option value="Venta">Venta</option>
+							<option value="Prestamo">Prestamo</option>
+						</select>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></small>		
+					</div>				
+					</div>					
+					<div class="mb-3 row">
+						<label class="col-sm-2 col-form-label" for="observacion" th:text="'Observación'"></label>
+						<div class="col-sm-6">
+							<textarea class="form-control" th:field="*{observacion}"></textarea>
+						</div>
+					</div>
+					<div class="mb-3 row">
+					<label class="col-sm-2 col-form-label" for="buscar_libro">Buscar libro</label>
+					<div class="col-sm-6">
+						<input type="text" th:name="buscar_libro" th:id="buscar_libro" class="form-control" >
+					</div>
+					</div>
+
+					<table th:replace="~{plantillas/plantilla_detalles :: detalle_factura}"></table>
+
+					<table id="cargar_detalle" class="table table-striped table-sm table-hover">
+						<thead>
+							<tr>
+								<th>Titulo</th>
+								<th>Cantidad</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+
+					<div class="mb-3 row">
+						<div class="col-3 offset-9">
+							<h4>Subtotal: <span id="subtotal_factura" class="badge badge-secondary">0</span></h4>
+						</div>
+					</div>
+
+					<div class="mb-3 row mt-4">
+						<div class="col-sm-6">
+							<input type="submit" th:value="${accion}" class="btn btn-outline-secondary"/>
+						</div>
+					</div>
+				</form>			
+			</div>
+		</div>	
+	</div>
+	<footer th:replace="~{plantillas/principal :: footer}"></footer>
+  <script th:replace="~{plantillas/autocompleta_producto :: script}"></script>
+</body>
+</html>

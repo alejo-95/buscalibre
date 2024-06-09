@@ -3,6 +3,7 @@ package libreria.model.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -38,6 +39,7 @@ public class Ejemplar {
     @Column(length = 50)
     private String estado;
 
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "libro_id")
     private Libro libro;

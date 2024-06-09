@@ -17,7 +17,7 @@
         <div class="card-body shadow-lg p-3">
 
           <h4 class="card-title text-right">
-            <a th:href="@{/comercial/facturanueva/} + ${cliente.id}" class="btn btn-outline-success btn-sm">facturar</a>
+            <a th:href="@{/libreria/prestamonuevo/} + ${cliente.id}" class="btn btn-outline-success btn-sm">Prestar</a>
           </h4>
 
           <img th:if="${#strings.length(cliente.foto) > 0}" th:src="@{/uploads/} + ${cliente.foto}"

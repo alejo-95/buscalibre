@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 
 import libreria.model.entity.Cliente;
 import libreria.model.entity.Editorial;
-import libreria.model.entity.Ejemplar;
 import libreria.model.entity.Libro;
+import libreria.model.entity.Prestamo;
 
 public interface LibreriaServiceIface {
     
@@ -25,15 +25,23 @@ public interface LibreriaServiceIface {
 	public void guardarLibro(Libro libro);
 	public Libro buscarLibroPorId(Long id);
 	public void eliminarLibroPorId(Long id);
+	public List<Libro> buscarLibrosPorNombre(String term);
 
 	//servicios para editorial
 	public List<Editorial> buscarEditorialesTodos();
 
 	//servicios para ejemplar
-	public  void guardarEjemplar(Ejemplar ejemplar);
-	public Ejemplar buscarEjemplarPorId(Long id);
-	public List<Ejemplar> buscarEjemplaresTodos();
-	public Page<Ejemplar> buscarEjemplaresTodos(Pageable pageable);
-	public void eliminarEjemplarPorId(Long id);
+	// public  void guardarEjemplar(Ejemplar ejemplar);
+	// public Ejemplar buscarEjemplarPorId(Long id);
+	// public List<Ejemplar> buscarEjemplaresTodos();
+	// public Page<Ejemplar> buscarEjemplaresTodos(Pageable pageable);
+	// public void eliminarEjemplarPorId(Long id);
+
+	//servicios para prestamo
+	public  void guardarPrestamo(Prestamo prestamo);
+	public Prestamo buscarPrestamoPorId(Long id);
+	public List<Prestamo> buscarPrestamosTodos();
+	public Page<Prestamo> buscarPrestamosTodos(Pageable pageable);
+	public void eliminarPrestamoPorId(Long id);
 	
 }

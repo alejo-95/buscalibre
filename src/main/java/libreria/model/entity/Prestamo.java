@@ -42,20 +42,20 @@ public class Prestamo {
     private Cliente cliente;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ejemplar_id")
-    private Ejemplar ejemplar;
+    @JoinColumn(name = "libro_id")
+    private Libro libro;
 
     public Prestamo() {
     }
 
     public Prestamo(Long id, @NotNull Date fechaDevolucion, String estado, String observacion, Cliente cliente,
-            Ejemplar ejemplar) {
+            Libro libro) {
         this.id = id;
         this.fechaDevolucion = fechaDevolucion;
         this.estado = estado;
         this.observacion = observacion;
         this.cliente = cliente;
-        this.ejemplar = ejemplar;
+        this.libro = libro;
     }
 
     public Long getId() {
@@ -98,13 +98,14 @@ public class Prestamo {
         this.cliente = cliente;
     }
 
-    public Ejemplar getEjemplar() {
-        return ejemplar;
+    public Libro getLibro() {
+        return libro;
     }
 
-    public void setEjemplar(Ejemplar ejemplar) {
-        this.ejemplar = ejemplar;
+    public void setLibro(Libro libro) {
+        this.libro = libro;
     }
-
     
+    
+
 }

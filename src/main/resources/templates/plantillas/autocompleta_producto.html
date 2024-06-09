@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<body>
+<!-- código html -->
+<script th:fragment="script">
+  $(document).ready(function(){
+    $('#buscar_libro').autocomplete({
+      source: function(request, response){
+        $.ajax({
+          url: '/libreria/cargarlibros/' + request.term,
+          dataType: 'json',
+          data: { term: request.term },
+          type: 'GET',
+          success: function(data){
+            response($.map(data, function(item){
+              return {
+                value: item.id,
+                label: item.titulo,
+                //precio: item.precio,
+              }; // fin del objeto que se retorna
+            })); // fin del método map
+          }, // fin del método success
+        }); // fin del método $.ajax
+      }, // fin del método source
+  
+      select: function(event, ui){
+        $('#buscar_libro').val(ui.item.label);
+        
+        if (utils.hasLibro(ui.item.value)) {
+          utils.incrementarCantidad(ui.item.value);
+          return false;
+        }
+  
+        let item = $("#plantilla_detalle").html();
+        item = item.replace(/{ID}/g, ui.item.value);
+        item = item.replace(/{TITULO}/g, ui.item.label);
+        
+        $("#cargar_detalle tbody").append(item);
+        
+        $('#buscar_libro').select();
+  
+        return false;
+      } // fin del método select
+    }); // fin del objeto autocomplete
+  
+    $("form").submit(function(){
+      $("#plantilla_detalle").remove();
+      return; // fin del método submit
+    });
+  }); /// fin de método ready
+
+
+// objeto utils con métodos como propiedades
+let utils = {
+
+  incrementarCantidad: function(id){
+		let cantidad = $("#cantidad_" + id).val() ? $("#cantidad_" + id).val() : 0;
+		$("#cantidad_" + id).val(++cantidad);
+	},
+
+  hasLibro: function(id){
+		let res = false;
+		$('input[name="detalle_id[]"]').each(function(){
+			if(parseInt(id) == parseInt($(this).val())) {
+				res = true;
+			}
+		});
+		return res;
+	},
+
+  eliminarDetalle: function(id){
+    $("#fila_" + id).remove();
+    this.calcularSubtotalFactura();
+  },
+
+  calcularSubtotalFactura: function(){
+		let subtotal = 0;
+		$('span[id^="total_detalle_"]').each(function(){
+			subtotal += parseInt($(this).html());
+		});
+		$("#subtotal_factura").html(subtotal);
+	},
+
+
+
+
+
+
+}
+</script>
+</body>
+</html>

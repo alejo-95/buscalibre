@@ -10,12 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import libreria.model.dao.ClienteDAO;
 import libreria.model.dao.EditorialesDAO;
-import libreria.model.dao.EjemplarDAO;
+
 import libreria.model.dao.LibroDAO;
+import libreria.model.dao.PrestamoDAO;
 import libreria.model.entity.Cliente;
 import libreria.model.entity.Editorial;
-import libreria.model.entity.Ejemplar;
+
 import libreria.model.entity.Libro;
+import libreria.model.entity.Prestamo;
 
 @Service
 public class LibreriaService implements LibreriaServiceIface{
@@ -29,8 +31,11 @@ public class LibreriaService implements LibreriaServiceIface{
     @Autowired
     private EditorialesDAO editorialDAO;
 
+    // @Autowired
+    // private EjemplarDAO ejemplarDAO;
+
     @Autowired
-    private EjemplarDAO ejemplarDAO;
+    private PrestamoDAO prestamoDAO;
 
 
     //servicios para cliente
@@ -93,6 +98,18 @@ public class LibreriaService implements LibreriaServiceIface{
         libroDAO.deleteById(id);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<Libro> buscarLibrosPorNombre(String term) {
+        
+        //return libroDAO.findByTitulosLikeIgnoreCase("%"+term+"%");
+
+        //return libroDAO.findByTituloContainingIgnoreCase(term);
+
+        return libroDAO.findByTituloLikeIgnoreCase("%"+term+"%");
+
+    }
+
     //servicios para editoriales
     @Override
     @Transactional(readOnly = true)
@@ -101,34 +118,66 @@ public class LibreriaService implements LibreriaServiceIface{
     }
 
     //Servicios para ejemplares
+    // @Override
+    // @Transactional
+    // public void guardarEjemplar(Ejemplar ejemplar) {
+    //     ejemplarDAO.save(ejemplar);
+    // }
+
+    // @Override
+    // @Transactional(readOnly = true)
+    // public Ejemplar buscarEjemplarPorId(Long id) {
+    //     return ejemplarDAO.findById(id).orElse(null);
+    // }
+
+    // @Override
+    // @Transactional(readOnly = true)
+    // public List<Ejemplar> buscarEjemplaresTodos() {
+    //     return ejemplarDAO.findAll();
+    // }
+
+    // @Override
+    // @Transactional(readOnly = true)
+    // public Page<Ejemplar> buscarEjemplaresTodos(Pageable pageable) {
+    //     return ejemplarDAO.findAll(pageable);
+    // }
+
+
+    // @Override
+    // public void eliminarEjemplarPorId(Long id) {
+    //     ejemplarDAO.deleteById(id);
+    // }
+
+    //Servicios de prestamo
+
     @Override
     @Transactional
-    public void guardarEjemplar(Ejemplar ejemplar) {
-        ejemplarDAO.save(ejemplar);
+    public void guardarPrestamo(Prestamo prestamo) {
+        prestamoDAO.save(prestamo);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Ejemplar buscarEjemplarPorId(Long id) {
-        return ejemplarDAO.findById(id).orElse(null);
+    public Prestamo buscarPrestamoPorId(Long id) {
+        return prestamoDAO.findById(id).orElse(null);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Ejemplar> buscarEjemplaresTodos() {
-        return ejemplarDAO.findAll();
+    public List<Prestamo> buscarPrestamosTodos() {
+        return prestamoDAO.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Ejemplar> buscarEjemplaresTodos(Pageable pageable) {
-        return ejemplarDAO.findAll(pageable);
+    public Page<Prestamo> buscarPrestamosTodos(Pageable pageable) {
+        return prestamoDAO.findAll(pageable);
     }
 
 
     @Override
-    public void eliminarEjemplarPorId(Long id) {
-        ejemplarDAO.deleteById(id);
+    public void eliminarPrestamoPorId(Long id) {
+        prestamoDAO.deleteById(id);
     }
 
     

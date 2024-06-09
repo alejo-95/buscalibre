@@ -2,6 +2,8 @@ package libreria.model.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,12 +40,14 @@ public class Libro {
     @Column(nullable = false, length = 50)
     private String isbn;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "editorial_id")
     private Editorial editorial;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "libro", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Ejemplar> ejemplares;
+    private List<Prestamo> prestamos;
 
     @ManyToMany(mappedBy = "libros", fetch = FetchType.LAZY)
     private List<Autor> autores;
@@ -52,7 +56,7 @@ public class Libro {
     }
 
     public Libro(Long id, String titulo, String edicion, String caratula, String anio, String isbn, Editorial editorial,
-            List<Ejemplar> ejemplares, List<Autor> autores) {
+            List<Prestamo> prestamos, List<Autor> autores) {
         this.id = id;
         this.titulo = titulo;
         this.edicion = edicion;
@@ -60,7 +64,7 @@ public class Libro {
         this.anio = anio;
         this.isbn = isbn;
         this.editorial = editorial;
-        this.ejemplares = ejemplares;
+        this.prestamos = prestamos;
         this.autores = autores;
     }
 
@@ -120,12 +124,12 @@ public class Libro {
         this.editorial = editorial;
     }
 
-    public List<Ejemplar> getEjemplares() {
-        return ejemplares;
+    public List<Prestamo> getPrestamos() {
+        return prestamos;
     }
 
-    public void setEjemplares(List<Ejemplar> ejemplares) {
-        this.ejemplares = ejemplares;
+    public void setPrestamos(List<Prestamo> prestamos) {
+        this.prestamos = prestamos;
     }
 
     public List<Autor> getAutores() {
@@ -136,7 +140,7 @@ public class Libro {
         this.autores = autores;
     }
 
-    
+        
 
             
     

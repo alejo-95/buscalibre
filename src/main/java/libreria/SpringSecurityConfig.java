@@ -23,16 +23,6 @@ public class SpringSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // @Bean
-    // UserDetailsService userDetailsService() throws Exception {
-    //     InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-
-    //     manager.createUser(User.withUsername("jefe").password(passwordEncoder().encode("Abc123")).roles("ADMIN", "USER").build());
-    //     manager.createUser(User.withUsername("luka").password(passwordEncoder().encode("Abc123")).roles("USER").build());
-
-    //     return manager;
-    // }
-
     @Autowired
     public void userDetailService(AuthenticationManagerBuilder build) throws Exception {
         build.userDetailsService(usuarioDetailService).passwordEncoder(passwordEncoder());
@@ -42,7 +32,7 @@ public class SpringSecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(requests -> requests
-                .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/comercial/clienteslistar", "/comercial/productoslistar").permitAll()
+                .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/comercial/clienteslistar", "/comercial/productoslistar","/libreria/cargarlibros/**").permitAll()
                 .requestMatchers("/comercial/clienteconsultar/**", "/comercial/productoconsultar/**").hasAnyRole("USER")
                 .requestMatchers("/uploads/**").hasAnyRole("USER")
                 .requestMatchers("/comercial/clientenuevo/**", "/comercial/clienteeliminar/**", "/comercial/clientemodificar/**").hasAnyRole("ADMIN")
